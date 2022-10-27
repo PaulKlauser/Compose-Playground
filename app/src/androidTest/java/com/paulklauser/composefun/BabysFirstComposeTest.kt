@@ -16,16 +16,21 @@ class BabysFirstComposeTest {
     fun test() {
         composeTestRule.setContent {
             ComposeFunTheme {
-                MaintenanceList(items = listOf(
-                    MaintenanceItem(
-                        "Title",
-                        "Date",
-                        "Mileage"
-                    )
-                ))
+                MainScreen(
+                    mainViewModel = MainViewModel(
+                        listOf(
+                            MaintenanceItem(
+                                "Title",
+                                "Date",
+                                "Mileage"
+                            )
+                        )
+                    ),
+                    {}
+                )
             }
         }
-        composeTestRule.onNodeWithTag("rowTitle").assertTextEquals("Title")
+        composeTestRule.onNodeWithTag("rowTitle", true).assertTextEquals("Title")
     }
 
 }
