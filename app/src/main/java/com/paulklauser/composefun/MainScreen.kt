@@ -77,6 +77,7 @@ private fun MainScreenPreview() {
     MainScreenContent(
         items = listOf(
             MaintenanceItem(
+                "1",
                 "Title",
                 "Date",
                 "Mileage"

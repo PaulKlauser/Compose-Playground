@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -50,9 +48,9 @@ class MainActivity : ComponentActivity() {
                     })
                 }
                 composable("Detail") {
-                    Detail {
+                    DetailScreen(viewModel = hiltViewModel(), id = "1", goBack = {
                         navController.popBackStack()
-                    }
+                    })
                 }
             }
         }
