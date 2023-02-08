@@ -17,6 +17,8 @@ class BabysFirstComposeTest {
         composeTestRule.setContent {
             ComposeFunTheme {
                 MainScreen(
+                    // I don't think you even need Hilt in your test since the ViewModel
+                    // is being passed in
                     mainViewModel = MainViewModel(
                         FakeMaintenanceRepository(
                             listOf(

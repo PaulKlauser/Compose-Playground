@@ -9,11 +9,14 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +44,10 @@ class MainActivity : ComponentActivity() {
 
             NavHost(navController = navController, startDestination = "Main") {
                 composable("Main") {
-                    MainScreen {
+                    // Scopes this ViewModel to this navigation destination
+                    MainScreen(mainViewModel = hiltViewModel(), onRowClicked = {
                         navController.navigate("Detail")
-                    }
+                    })
                 }
                 composable("Detail") {
                     Detail {
@@ -53,13 +57,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-fun DefaultPreview() {
-    MainScreen {}
 }

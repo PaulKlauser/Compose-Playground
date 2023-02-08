@@ -1,6 +1,8 @@
 package com.paulklauser.composefun
 
-class ProdMaintenanceRepository : MaintenanceRepository {
+import javax.inject.Inject
+
+class ProdMaintenanceRepository @Inject constructor() : MaintenanceRepository {
 
     override fun getMaintenanceItems(): List<MaintenanceItem> {
         return listOf(

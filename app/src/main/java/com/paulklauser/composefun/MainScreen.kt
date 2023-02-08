@@ -13,14 +13,28 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.insets.ui.TopAppBar
 import com.paulklauser.composefun.ui.theme.ComposeFunTheme
 
+// This serves as a binding between our ViewModel and our actual content
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel = viewModel(),
+    mainViewModel: MainViewModel,
+    onRowClicked: () -> Unit
+) {
+    MainScreenContent(
+        items = mainViewModel.data.collectAsState().value,
+        onRowClicked = onRowClicked
+    )
+}
+
+// This allows us to use this for preview without needing our Fakes
+@Composable
+private fun MainScreenContent(
+    items: List<MaintenanceItem>,
     onRowClicked: () -> Unit
 ) {
     ComposeFunTheme {
@@ -31,7 +45,7 @@ fun MainScreen(
                 })
         }) {
             Box(Modifier.padding(paddingValues = it)) {
-                MaintenanceList(items = mainViewModel.data.collectAsState().value, onRowClicked)
+                MaintenanceList(items = items, onRowClicked)
             }
         }
     }
@@ -44,9 +58,6 @@ private fun MaintenanceList(items: List<MaintenanceItem>, onRowClicked: () -> Un
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
-//        items(10) {
-//            MaintenanceRow(title = "Title", installDate = "Install", mileage = "Mileage")
-//        }
         items.forEach {
             item {
                 MaintenanceRow(
@@ -58,4 +69,19 @@ private fun MaintenanceList(items: List<MaintenanceItem>, onRowClicked: () -> Un
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun MainScreenPreview() {
+    MainScreenContent(
+        items = listOf(
+            MaintenanceItem(
+                "Title",
+                "Date",
+                "Mileage"
+            )
+        ),
+        onRowClicked = {}
+    )
 }
