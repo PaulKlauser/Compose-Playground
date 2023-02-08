@@ -5,16 +5,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class MainViewModel(
-    data: List<MaintenanceItem> = listOf(
-        MaintenanceItem(
-            "Michelin Pilot Sport 4S",
-            "Oct 10, 2022",
-            "125,430"
-        )
-    )
+    maintenanceRepository: MaintenanceRepository = ProdMaintenanceRepository()
 ) : ViewModel() {
 
-    private val _data = MutableStateFlow(data)
+    private val _data = MutableStateFlow(maintenanceRepository.getMaintenanceItems())
     val data = _data.asStateFlow()
 
 }

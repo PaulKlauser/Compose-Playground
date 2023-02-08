@@ -21,16 +21,17 @@ class RobolectricTest {
             ComposeFunTheme {
                 MainScreen(
                     mainViewModel = MainViewModel(
-                        listOf(
-                            MaintenanceItem(
-                                "Title",
-                                "Date",
-                                "Mileage"
+                        FakeMaintenanceRepository(
+                            listOf(
+                                MaintenanceItem(
+                                    "Title",
+                                    "Date",
+                                    "Mileage"
+                                )
                             )
                         )
-                    ),
-                    {}
-                )
+                    )
+                ) {}
             }
         }
         composeTestRule.onNodeWithTag("rowTitle", true).assertTextEquals("Title")
