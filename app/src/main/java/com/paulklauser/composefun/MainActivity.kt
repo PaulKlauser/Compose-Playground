@@ -44,11 +44,11 @@ class MainActivity : ComponentActivity() {
                 composable("Main") {
                     // Scopes this ViewModel to this navigation destination
                     MainScreen(mainViewModel = hiltViewModel(), onRowClicked = {
-                        navController.navigate("Detail")
+                        navController.navigate("Detail/1")
                     })
                 }
-                composable("Detail") {
-                    DetailScreen(viewModel = hiltViewModel(), id = "1", goBack = {
+                composable("Detail/{$DETAIL_ID_KEY}") {
+                    DetailScreen(viewModel = hiltViewModel(), goBack = {
                         navController.popBackStack()
                     })
                 }
