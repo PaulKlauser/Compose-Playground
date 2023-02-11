@@ -14,8 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.paulklauser.composefun.ui.theme.ComposeFunTheme
 
 @Composable
-fun DetailScreen(viewModel: DetailViewModel, id: String, goBack: () -> Unit) {
-    viewModel.load(id)
+fun DetailScreen(viewModel: DetailViewModel, goBack: () -> Unit) {
     DetailScreenContent(
         uiState = viewModel.uiState.collectAsState().value,
         goBack = goBack

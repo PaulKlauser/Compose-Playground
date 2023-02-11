@@ -7,14 +7,13 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,14 +42,17 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = "Main") {
                 composable("Main") {
                     // Scopes this ViewModel to this navigation destination
-                    MainScreen(mainViewModel = hiltViewModel(), onRowClicked = {
+                    MainScreen(mainViewModel = koinViewModel(), onRowClicked = {
                         navController.navigate("Detail")
                     })
                 }
                 composable("Detail") {
-                    DetailScreen(viewModel = hiltViewModel(), id = "1", goBack = {
-                        navController.popBackStack()
-                    })
+                    DetailScreen(
+                        // It's really nice that you can pass parameters to the ViewModel injector
+                        viewModel = koinViewModel(parameters = { parametersOf("1") }),
+                        goBack = {
+                            navController.popBackStack()
+                        })
                 }
             }
         }

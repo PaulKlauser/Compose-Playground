@@ -1,24 +1,23 @@
 package com.paulklauser.composefun
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
 
-@HiltViewModel
-class DetailViewModel @Inject constructor(
-    private val maintenanceRepository: MaintenanceRepository
+class DetailViewModel(
+    private val id: String,
+    maintenanceRepository: MaintenanceRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(DetailUiState(null))
+    private val _uiState = MutableStateFlow(
+        DetailUiState(
+            maintenanceRepository.getMaintenanceItems().firstOrNull { it.id == id })
+    )
     val uiState = _uiState.asStateFlow()
 
-    // Don't love that this needs to exist. This is a product of AssistedInject not existing
-    // For Hilt ViewModels.
-    fun load(id: String) {
-        _uiState.value =
-            DetailUiState(maintenanceRepository.getMaintenanceItems().firstOrNull { it.id == id })
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("DetailViewModel", "onCleared()")
     }
-
 }
